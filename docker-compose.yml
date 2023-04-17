@@ -1,0 +1,16 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./mysimplechatbot/Dockerfile
+      args:
+        - GIT_REPO=https://github.com/garland3/mysimplechatbot.git
+    ports:
+      - "80:80"
+  backend:
+    build:
+      context: ./apiserver
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
