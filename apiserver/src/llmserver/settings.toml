@@ -1,0 +1,2 @@
+# MODELNAME = "databricks/dolly-v2-3b"
+MODELNAME = "stabilityai/stablelm-base-alpha-3b"

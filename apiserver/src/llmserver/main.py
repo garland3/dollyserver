@@ -4,15 +4,16 @@ from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 from transformers import (AutoModelForCausalLM, AutoTokenizer, PreTrainedModel,
                           PreTrainedTokenizer)
-
+from config import settings
 # Use this variable as the default API key or read from the environment.
-DEFAULT_API_KEY = "xx1asafs9uaxlkQe32qasdofadsouf@@@adosucaeoru#@!n"
-API_KEY = os.environ.get("API_KEY", DEFAULT_API_KEY)  # Override API_KEY if the environment variable is set.
+API_KEY = settings.APIKEY
 
 
 app = FastAPI()
 
-modelname = "databricks/dolly-v2-3b"
+# modelname = "databricks/dolly-v2-3b"
+# modelname = "databricks/dolly-v2-7b"
+modelname = settings.MODELNAME
 tokenizer = AutoTokenizer.from_pretrained(modelname, padding_side="left")
 model = AutoModelForCausalLM.from_pretrained(modelname, device_map="auto", trust_remote_code=True)
 print("Model loaded.")
@@ -61,4 +62,4 @@ async def run(instruction: Instruction, api_key: str = Header(None)):
     return {"response": response}
 
 # conda activate dollytest
-# uvicorn dolly2_api:app --host 0.0.0.0 --port 8000
+# uvicorn main:app --host 0.0.0.0 --port 8000
